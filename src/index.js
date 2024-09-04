@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createStore } from 'redux'
-import authReducer from './reducers';
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from '@redux-devtools/extension';
+import {thunk} from 'redux-thunk'
+// import rootReducer from './reducers'
+import authReducer from './reducers.js';
 import { Provider } from 'react-redux'
 
-const store = createStore(authReducer);
+const store = createStore(authReducer, applyMiddleware(thunk));
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
