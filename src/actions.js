@@ -4,37 +4,28 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const REGISTER = 'REGISTER'
 
-export const login = (username, password) => {
+
+export const login = (username, password, navigate) => { 
     return async (dispatch) => {
         dispatch({type: LOGIN_REQUEST});
         try {
             const response = await axios.post('https://fakestoreapi.com/auth/login', {
                 username,
                 password
-            });
+            })
+
             console.log(response)
-            const data = response.json();
-            dispatch({ type: LOGIN_SUCCESS, payload: data});
+            const data = response.data
+            if (response.status === 200) {
+                dispatch({ type: LOGIN_SUCCESS, payload: data});
+                navigate('/home')
+            }
         } catch (error) {
                 dispatch({ type: LOGIN_FAILURE, payload: error.message});
             }
         
         
         
-        // axios.post('https://fakestoreapi.com/auth/login',
-        //     {
-        //         username: username, 
-        //         password: password
-        //     }
-        // )
-        // .then(function (response) {
-        //     const data = response.json();
-        //     dispatch({ type: LOGIN_SUCCESS, payload: data});
-        //     console.log(response);
-        // })
-        // .catch(function (error) {
-        //     dispatch({ type: LOGIN_FAILURE, payload: error.message});
-        // })
 
 
 
@@ -78,6 +69,26 @@ export const login = (username, password) => {
         //     })
 
         // })
+
+
+
+
+
+                // axios.post('https://fakestoreapi.com/auth/login',
+        //     {
+        //         username: username, 
+        //         password: password
+        //     }
+        // )
+        // .then(function (response) {
+        //     const data = response.json();
+        //     dispatch({ type: LOGIN_SUCCESS, payload: data});
+        //     console.log(response);
+        // })
+        // .catch(function (error) {
+        //     dispatch({ type: LOGIN_FAILURE, payload: error.message});
+        // })
+
 
         }
 }
