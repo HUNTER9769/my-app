@@ -1,13 +1,36 @@
 import React, {useState} from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../actions'
+import { Link } from 'react-router-dom'
 import './Register.css'
+import authReducer from '../reducers'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
+    
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState('')
+    const [firstname , setFirstname] = useState('')
+    const [lastname , setLastname] = useState('')
+    const [username , setUsername] = useState('')
+    const [mobile , setMobile] = useState('')
+    const [password , setPassword] = useState('')
+    const [confirm_password , setConfirmPassword] = useState('')
+    const [room , setRoom] = useState('')
+    const [street , setStreet] = useState('')
+    const [city , setCity] = useState('')
+    const [zipcode , setZipcode] = useState('')
+
+    const registerSubmit = (e) => {
+        e.preventDefault();
+        // dispatch(register(email))
+    }
 
     return (
     <div className='register-container'>
         <div>
-        <form className='register-box'>
+        <form className='register-box' onSubmit={registerSubmit}>
                 <h5 className='sign-up-with-email'>Sign Up with Email</h5>
                 <div className='register-input-container'>
                     <div className='enter-firstname image-with-input'>
@@ -59,7 +82,7 @@ const Register = () => {
                 </div>
                 <input type="checkbox" className='terms-agree' id='terms-agreement-check' name='terms-check' />
                 <label htmlFor="terms-check" style={{margin: '10px 0px'}}>I agree to the <span style={{color: "#0000FF"}}>terms and conditions</span></label>
-                <button className='signup-btn'></button>
+                <button className='signup-btn'>Sign Up</button>
 
         </form>
         </div>
