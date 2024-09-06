@@ -7,22 +7,29 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const REGISTER_FAILURE = 'REGISTER_FAILURE'
 
 
- 
+      
 
 export const login = (username, password, navigate) => { 
     return async (dispatch) => {
         dispatch({type: LOGIN_REQUEST});
         try {
-            const response = await axios.post('https://fakestoreapi.com/auth/login', {
+            const response = await axios.post('http://localhost:5000/login/', {
                 username,
-                password
+                // password
             })
 
             console.log(response)
             const data = response.data
-            if (response.status === 200) {
+            if (response.status === 200 ) {
+
                 dispatch({ type: LOGIN_SUCCESS, payload: data});
-                navigate('/home')
+                setTimeout(() => {
+                    navigate('/home')
+                }, 3000)
+
+            } else {
+                dispatch({ type: LOGIN_FAILURE, payload: 'Unexpected response data' });
+
             }
         } catch (error) {
                 dispatch({ type: LOGIN_FAILURE, payload: error.message});
@@ -99,41 +106,31 @@ export const login = (username, password, navigate) => {
 
 export const register = (email,firstname , lastname , username , mobile , password , confirm_password , room , street , city , zipcode , navigate) => {
     return async (dispatch) => {
-        fullname = {
-            firstname,
-            lastname
-        }
-
-        fulladdr = {
-            city,
-            street,
-            room,
-            zipcode,
-            geolocation:{
-                lat:'-37.3159',
-                long:'81.1496'
-            }
-        }
         dispatch({type: REGISTER_REQUEST});
         try {
-            const response = await axios.post('https://fakestoreapi.com/users', {
+            const response = await axios.post('http://localhost:5000/register', {
                 email,
                 username,
                 password,
-                fullname,
-                fulladdr,
-                mobile
+                firstname,
+                lastname,
+                
+                city,
+                street,
+                room,
+                zipcode,
+                mobile,
                 
             })
 
             console.log(response)
             const data = response.data
             if (response.status === 200) {
-                dispatch({ type: LOGIN_SUCCESS, payload: data});
+                dispatch({ type: REGISTER_SUCCESS, payload: data});
                 navigate('/home')
             }
         } catch (error) {
-                dispatch({ type: LOGIN_FAILURE, payload: error.message});
+                dispatch({ type: REGISTER_FAILURE, payload: error.message});
             }
 }
 }

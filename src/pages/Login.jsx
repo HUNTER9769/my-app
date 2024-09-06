@@ -13,7 +13,7 @@ function Login() {
     const dispatch = useDispatch();
     const [email, setEmail] = useState('')
     const [password , setPassword] = useState('')
-    // const { loading, error, user } = useSelector(state => state.authReducer);
+    const { loading, user, error} = useSelector((state)=> state );
 
 
     const loginSubmit = (e) => {
@@ -86,6 +86,15 @@ function Login() {
                         </button>
                         <Link to={'./Register'} ><span className='register-page-link'>Don't have an account ? Register Here</span></Link>
 
+
+                        {/* Loading state */} 
+                        {loading && <p>Loading...</p>}
+
+                        {/* Error message */}
+                        {error && <p style={{ color: 'red' }}>{error}</p>}
+
+                        {/* Success message */}
+                        {user && <p>Login successful! Welcome, {user.username}</p>}
                     </form>
                     </div>
                 </div>
